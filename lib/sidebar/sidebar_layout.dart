@@ -1,7 +1,8 @@
-import 'package:DOSTv/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:dostv_app/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:dostv_app/sidebar/searchbar.dart';
+import 'package:dostv_app/sidebar/sidebar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:DOSTv/sidebar/sidebar.dart';
 
 class SideBarLayout extends StatelessWidget {
   @override
@@ -16,6 +17,7 @@ class SideBarLayout extends StatelessWidget {
                 return navigationState as Widget;
               },
             ),
+            SearchButton(),
             Sidebar(),
           ],
         ),

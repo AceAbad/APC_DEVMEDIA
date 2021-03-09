@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:DOSTv/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:DOSTv/sidebar/menu_item.dart';
-import 'package:DOSTv/sidebar/menu_itemhome.dart';
-import 'package:DOSTv/sidebar/menu_itempsa.dart';
+import 'package:dostv_app/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:dostv_app/sidebar/menuitem/menu_item.dart';
+import 'package:dostv_app/sidebar/menuitem/menu_itembookmark.dart';
+import 'package:dostv_app/sidebar/menuitem/menu_itemhome.dart';
+import 'package:dostv_app/sidebar/menuitem/menu_itempsa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
@@ -73,7 +74,7 @@ class _SideBarState extends State<Sidebar>
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       ListTile(
                         title: Container(
@@ -94,15 +95,7 @@ class _SideBarState extends State<Sidebar>
                         },
                       ),
                       MenuItem(
-                        title: "Episodes",
-                        onTap: () {
-                          onIconPressed();
-                          BlocProvider.of<NavigationBloc>(context)
-                              .add(NavigationEvents.EpisodesClickedEvent);
-                        },
-                      ),
-                      MenuItem(
-                        title: "SineSensya",
+                        title: "Sinesensya",
                         onTap: () {
                           onIconPressed();
                           BlocProvider.of<NavigationBloc>(context)
@@ -117,6 +110,14 @@ class _SideBarState extends State<Sidebar>
                               .add(NavigationEvents.BalitangClickedEvent);
                         },
                       ),
+                      MenuItem(
+                        title: "Interviews",
+                        onTap: () {
+                          onIconPressed();
+                          BlocProvider.of<NavigationBloc>(context)
+                              .add(NavigationEvents.InterviewsClickedEvent);
+                        },
+                      ),
                       MenuItemPSA(
                         title: "Public Service Announcements",
                         onTap: () {
@@ -125,20 +126,29 @@ class _SideBarState extends State<Sidebar>
                               .add(NavigationEvents.PSAClickedEvent);
                         },
                       ),
+                      MenuItemBookmark(
+                        title: "Bookmarks",
+                        onTap: () {
+                          onIconPressed();
+                          BlocProvider.of<NavigationBloc>(context)
+                              .add(NavigationEvents.BookmarkClickedEvent);
+                        },
+                      ),
                     ],
                   ),
                 ),
               ),
               Align(
-                alignment: Alignment(0, -0.9),
+                alignment: Alignment(0, -0.90),
                 child: GestureDetector(
                   onTap: () {
                     onIconPressed();
                   },
                   child: Container(
                     width: 35,
-                    height: 70,
-                    alignment: FractionalOffset(0.9, 0.32),
+                    height: 50,
+                    color: Color(0xFF161A20),
+                    alignment: FractionalOffset(0.9, 0.50),
                     child: AnimatedIcon(
                       progress: _animationController.view,
                       icon: AnimatedIcons.menu_close,

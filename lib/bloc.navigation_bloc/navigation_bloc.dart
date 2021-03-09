@@ -1,16 +1,22 @@
-import 'package:DOSTv/pages/Episodes.dart';
-import 'package:DOSTv/pages/balitang.dart';
-import 'package:DOSTv/pages/home.dart';
-import 'package:DOSTv/pages/psa.dart';
-import 'package:DOSTv/pages/sinesensya.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dostv_app/pages/balitang.dart';
+import 'package:dostv_app/pages/bookmark.dart';
+import 'package:dostv_app/pages/home/home.dart';
+import 'package:dostv_app/pages/home/homelatestvideos.dart';
+import 'package:dostv_app/pages/home/homelivestream.dart';
+import 'package:dostv_app/pages/interviews.dart';
+import 'package:dostv_app/pages/psaa.dart';
+import 'package:dostv_app/pages/sinesensya.dart';
 
 enum NavigationEvents {
   HomePageClickedEvent,
-  EpisodesClickedEvent,
+  HomePageAClickedEvent,
+  HomePageBClickedEvent,
   SinesensyaClickedEvent,
   BalitangClickedEvent,
   PSAClickedEvent,
+  InterviewsClickedEvent,
+  BookmarkClickedEvent,
 }
 
 abstract class NavigationStates {}
@@ -25,8 +31,11 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
       case NavigationEvents.HomePageClickedEvent:
         yield Homepage();
         break;
-      case NavigationEvents.EpisodesClickedEvent:
-        yield Episodes();
+      case NavigationEvents.HomePageAClickedEvent:
+        yield HomepageA();
+        break;
+      case NavigationEvents.HomePageBClickedEvent:
+        yield HomepageB();
         break;
       case NavigationEvents.SinesensyaClickedEvent:
         yield Sinesensya();
@@ -36,6 +45,12 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates> {
         break;
       case NavigationEvents.PSAClickedEvent:
         yield PSA();
+        break;
+      case NavigationEvents.InterviewsClickedEvent:
+        yield Interview();
+        break;
+      case NavigationEvents.BookmarkClickedEvent:
+        yield Bookmark();
         break;
     }
   }

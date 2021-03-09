@@ -1,15 +1,16 @@
 import 'package:dostv_app/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:dostv_app/json/videoinfo.dart';
-import 'package:dostv_app/pages/watchpage/balitawatchpage.dart';
+import 'package:dostv_app/pages/watchpage/homepage/latestvid.dart';
 import 'package:dostv_app/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Balitang extends StatefulWidget with NavigationStates {
+class HomepageB extends StatefulWidget with NavigationStates {
   @override
-  _BalitangState createState() => _BalitangState();
+  _HomepageBState createState() => _HomepageBState();
 }
 
-class _BalitangState extends State<Balitang>
+class _HomepageBState extends State<HomepageB>
     with SingleTickerProviderStateMixin {
   bool _isScrollToTopBtnVisible = false;
   AnimationController _animationController;
@@ -94,50 +95,85 @@ class _BalitangState extends State<Balitang>
     return ListView(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(right: 20, left: 20),
+          padding: const EdgeInsets.only(right: 0, left: 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 5,
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                height: 30.0,
-                color: Color(0xFF3EC4B2),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "Balitang RapiDOST",
-                      style: TextStyle(
-                          color: white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+              new Center(
+                child: new ButtonBar(
+                  mainAxisSize: MainAxisSize
+                      .min, // this will take space as minimum as posible(to center)
+                  children: <Widget>[
+                    new Container(
+                      height: 40,
+                      width: 108,
+                      color: Color(0xFF232D3D),
+                      child: Center(
+                        child: TextButton(
+                          child: Text(
+                            "Feautured Videos",
+                            style: TextStyle(
+                                color: white,
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(NavigationEvents.HomePageClickedEvent);
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                    new Container(
+                      height: 40,
+                      width: 108,
+                      color: Color(0xFF354257),
+                      child: Center(
+                        child: TextButton(
+                          child: Text(
+                            "Latest Episodes",
+                            style: TextStyle(
+                                color: Color(0xFF3EC4B2),
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(NavigationEvents.HomePageBClickedEvent);
+                          },
+                        ),
+                      ),
+                    ),
+                    new Container(
+                      height: 40,
+                      width: 108,
+                      color: Color(0xFF232D3D),
+                      child: Center(
+                        child: TextButton(
+                          child: Text(
+                            "Livestreams",
+                            style: TextStyle(
+                                color: white,
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<NavigationBloc>(context)
+                                .add(NavigationEvents.HomePageAClickedEvent);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: Text(
-            "LATEST UPLOAD",
+            "Latest Video",
             style: TextStyle(
                 color: white, fontSize: 17, fontWeight: FontWeight.bold),
           ),
@@ -146,7 +182,7 @@ class _BalitangState extends State<Balitang>
           height: 5,
         ),
         Column(
-          children: List.generate(balitang_pop.length, (index) {
+          children: List.generate(lates_pop.length, (index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Column(
@@ -158,12 +194,11 @@ class _BalitangState extends State<Balitang>
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => BalitangVideoPage(
-                                      title: balitang_pop[index]['title'],
-                                      thumbnail: balitang_pop[index]
+                                builder: (_) => LatestVideoPage(
+                                      title: lates_pop[index]['title'],
+                                      thumbnail: lates_pop[index]
                                           ['thumnail_img'],
-                                      videoUrl: balitang_pop[index]
-                                          ['video_url'],
+                                      videoUrl: lates_pop[index]['video_url'],
                                     )));
                       },
                       child: Container(
@@ -175,7 +210,7 @@ class _BalitangState extends State<Balitang>
                                     Colors.black.withOpacity(0.6),
                                     BlendMode.dstATop),
                                 image: AssetImage(
-                                    balitang_pop[index]['thumnail_img']),
+                                    lates_pop[index]['thumnail_img']),
                                 fit: BoxFit.cover)),
                         child: new Align(
                           alignment: Alignment.bottomCenter,
@@ -194,8 +229,7 @@ class _BalitangState extends State<Balitang>
                                         color: Color(0xFF161A20),
                                         child: Center(
                                           child: Text(
-                                            balitang_pop[index]
-                                                ['video_duration'],
+                                            lates_pop[index]['video_duration'],
                                             style: new TextStyle(
                                               fontWeight: FontWeight.w800,
                                               fontSize: 12.0,
@@ -218,13 +252,12 @@ class _BalitangState extends State<Balitang>
                                   new Positioned(
                                     left: 10.0,
                                     bottom: 15.0,
-                                    child:
-                                        new Text(balitang_pop[index]['title'],
-                                            style: new TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 18.0,
-                                              color: Colors.white,
-                                            )),
+                                    child: new Text(lates_pop[index]['title'],
+                                        style: new TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18.0,
+                                          color: Colors.white,
+                                        )),
                                   ),
                                   new Positioned(
                                     right: 5.0,
@@ -247,18 +280,30 @@ class _BalitangState extends State<Balitang>
           }),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Text(
-            "MOST POPULAR",
-            style: TextStyle(
-                color: white, fontSize: 17, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.only(left: 0, right: 0),
+          child: Container(
+            height: 30.0,
+            color: Color(0xFF3EC4B2),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+              child: Container(
+                child: Text(
+                  "More Videos",
+                  style: TextStyle(
+                      color: white, fontSize: 17, fontWeight: FontWeight.w800),
+                ),
+              ),
+            ),
           ),
         ),
         SizedBox(
           height: 5,
         ),
+        SizedBox(
+          height: 18,
+        ),
         Column(
-          children: List.generate(balitang.length, (index) {
+          children: List.generate(lates.length, (index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: Column(
@@ -270,11 +315,10 @@ class _BalitangState extends State<Balitang>
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => BalitangVideoPage(
-                                      title: balitang[index]['title'],
-                                      thumbnail: balitang[index]
-                                          ['thumnail_img'],
-                                      videoUrl: balitang[index]['video_url'],
+                                builder: (_) => LatestVideoPage(
+                                      title: lates[index]['title'],
+                                      thumbnail: lates[index]['thumnail_img'],
+                                      videoUrl: lates[index]['video_url'],
                                     )));
                       },
                       child: Container(
@@ -285,8 +329,7 @@ class _BalitangState extends State<Balitang>
                                 colorFilter: ColorFilter.mode(
                                     Colors.black.withOpacity(0.6),
                                     BlendMode.dstATop),
-                                image:
-                                    AssetImage(balitang[index]['thumnail_img']),
+                                image: AssetImage(lates[index]['thumnail_img']),
                                 fit: BoxFit.cover)),
                         child: new Align(
                           alignment: Alignment.bottomCenter,
@@ -305,7 +348,7 @@ class _BalitangState extends State<Balitang>
                                         color: Color(0xFF161A20),
                                         child: Center(
                                           child: Text(
-                                            balitang[index]['video_duration'],
+                                            lates[index]['video_duration'],
                                             style: new TextStyle(
                                               fontWeight: FontWeight.w800,
                                               fontSize: 12.0,
@@ -328,7 +371,7 @@ class _BalitangState extends State<Balitang>
                                   new Positioned(
                                     left: 10.0,
                                     bottom: 15.0,
-                                    child: new Text(balitang[index]['title'],
+                                    child: new Text(lates[index]['title'],
                                         style: new TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 18.0,
